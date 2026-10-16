@@ -1,0 +1,43 @@
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+    include-exception: false
+
+spring:
+  application:
+    name: jwt-rbac-demo
+  datasource:
+    url: jdbc:h2:mem:jwtrbacdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: false
+
+# Security & JWT Configuration
+jwt:
+  # Secret key must be at least 256 bits (32 bytes) for HS256 algorithm.
+  # Can be overridden via environment variable JWT_SECRET in production.
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+  # Expiration in milliseconds (default: 86400000 ms = 24 hours)
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+# Application Initial Data Configuration
+app:
+  seed-initial-data: true
+  admin:
+    default-username: ${DEFAULT_ADMIN_USERNAME:admin}
+    default-email: ${DEFAULT_ADMIN_EMAIL:admin@example.com}
+    default-password: ${DEFAULT_ADMIN_PASSWORD:Admin@12345}
